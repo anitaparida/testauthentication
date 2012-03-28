@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+                 http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.1.xsd">
+
+  <http>
+    <intercept-url pattern="/login*.jsp*" filters="none"/>
+    <intercept-url pattern="/images/**" filters="none"/>
+    <intercept-url pattern="/includes/**" filters="none"/>
+    <intercept-url pattern="/**" access="ROLE_USER"/>
+    <form-login login-page="/login.jsp" always-use-default-target="true"/>
+    <concurrent-session-control max-sessions="1" expired-url="/login-duplicate.jsp"/>
+    <logout/>
+  </http>
+
+  <ldap-server
+    url="ldap://ldapserver:389"
+    manager-dn="CN=Administrator,CN=Users,DC=www,DC=mydomain,DC=com"
+    manager-password="mgrpasswd"
+  />
+
+  <ldap-authentication-provider
+    user-search-base="cn=Users,dc=www,dc=mydomain,dc=com"
+    user-search-filter="sAMAccountName={0}"
+    group-search-filter="member={0}"
+    group-search-base="cn=Users,dc=www,dc=mydomain,dc=com"
+    role-prefix="ROLE_"
+  />
+</beans:beans>

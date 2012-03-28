@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<beans>
+	<bean id="userInfo" class="com.xebia.testauthentication.UserInfo">
+		<property name="username" value="anni" />
+		<property name="password" value="password" />
+	</bean>
+
+	<bean name="/securityService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+		<property name="serviceInterface" value="com.xebia.testauthentication.SecurityServiceInterface" />
+		<property name="service" ref="securityService" />
+	</bean>
+
+</beans>
